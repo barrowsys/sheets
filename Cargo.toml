@@ -1,0 +1,11 @@
+[package]
+name = "sheets"
+version = "0.1.0"
+authors = ["Ezra Barrow <barrow@tilde.team>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+crossterm = "0.19.0"
+array2d = "0.2.1"
