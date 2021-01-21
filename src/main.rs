@@ -12,8 +12,9 @@
  * --------------------
  */
  
+use simplelog::*;
 use std::io::stdout;
-use std::convert::TryFrom;
+use std::fs::File;
 
 use sheets::Result;
 use sheets::run;
@@ -38,6 +39,7 @@ use crossterm::{
 };
 
 fn main() -> Result<()> {
+    let _ = WriteLogger::init(LevelFilter::Info, Config::default(), File::create("log.txt").unwrap());
     let mut stdout = stdout();
     let result = run(&mut stdout);
     execute!(stdout,

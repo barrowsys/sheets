@@ -11,8 +11,8 @@
  * -Ezra Barrow
  * --------------------
  */
+#![allow(dead_code)]
 
-use std::io;
 use std::fmt;
 
 #[doc(hidden)]

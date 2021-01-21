@@ -11,6 +11,7 @@
  * -Ezra Barrow
  * --------------------
  */
+#![allow(dead_code)]
 
 use crate::consts::*;
 use crate::error::*;
@@ -21,11 +22,9 @@ use convert_base::Convert;
 use lazy_static::lazy_static;
 use serde::{Serialize, Deserialize};
 use std::convert::TryFrom;
-use std::fmt;
 use std::str::FromStr;
 use regex::Regex;
 use rust_decimal::prelude::*;
-use std::thread::sleep_ms;
 
 fn to_col(n: u16) -> String {
     let mut conv: Convert = Convert::new(65535, 27);
@@ -283,6 +282,9 @@ impl Default for CellAlignment {
 #[derive(Default, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Cell {
     pub data: CellData,
+    pub raw: Option<String>,
+    pub display: Option<String>,
+    pub num: Option<Decimal>,
     pub alignment: CellAlignment,
 }
 impl Cell {

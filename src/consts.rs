@@ -11,6 +11,7 @@
  * -Ezra Barrow
  * --------------------
  */
+#![allow(non_upper_case_globals)] //TODO: fix this
 
 // const fullsize: usize = 20;
 pub const fullwidth: usize = 20;

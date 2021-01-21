@@ -25,22 +25,18 @@ pub(crate) mod macros;
 
 use lazy_static::lazy_static;
 use regex::Regex;
-use std::collections::vec_deque::VecDeque;
-use std::fmt;
 use std::fs;
+#[allow(unused_imports)]
 use std::io::{Write, prelude::*};
-use std::thread::sleep;
 use std::time::Duration;
-use std::convert::TryInto;
 use ndarray::prelude::*;
 use serde::{Serialize, Deserialize};
-use std::thread::sleep_ms;
 
 use crossterm::{
     execute, queue,
-    cursor::{self, MoveToNextLine},
+    cursor,//::{self, MoveToNextLine},
     event::{self, poll, read, Event, KeyCode, KeyEvent, KeyModifiers},
-    style::{self, Color, Attribute, Print, ResetColor, SetBackgroundColor, SetForegroundColor, SetAttribute},
+    style::{Color, Attribute, Print, ResetColor, SetBackgroundColor, SetForegroundColor, SetAttribute},
     terminal,
     ExecutableCommand,
 };
@@ -56,9 +52,6 @@ impl Sheet {
     pub fn cell_ref_mut(&mut self, x: u16, y: u16) -> Option<&mut Cell> {
         self.array.get_mut((y as usize - 1, x as usize - 1))
     }
-    // fn cell_cloned(&self, pos: (u16, u16), r_track: &mut u8) -> Option<Cell> {
-    //     self.cell_ref(pos.0, pos.1).cloned()
-    // }
     pub fn set_cell(&mut self, x: u16, y: u16, text: &str) {
         self.cell_ref_mut(x, y).unwrap().set_data(text, (x, y));
     }
@@ -255,7 +248,7 @@ impl Context {
         let mut buf2 = String::new();
         let mut hist_pos = self.command_history.len();
         let mut txtpos = buf.len();
-        let mut extra = buf.len().saturating_sub(8);
+        let extra = buf.len().saturating_sub(8);
         let mut suggest_count = 0;
         let (chars_wide, chars_high) = terminal::size()?;
         let row_num = chars_high.saturating_sub(1);
@@ -448,7 +441,7 @@ impl Context {
             self.filename.clear();
             self.filename.push_str(filename);
         }
-        let mut file = fs::File::open(&self.filename)?;
+        let file = fs::File::open(&self.filename)?;
         self.sheet = serde_json::from_reader(file)?;
         self.saved = true;
         self.sheet.recalculate();
@@ -459,7 +452,7 @@ impl Context {
             self.filename.clear();
             self.filename.push_str(filename);
         }
-        let mut file = fs::File::create(&self.filename)?;
+        let file = fs::File::create(&self.filename)?;
         serde_json::to_writer(file, &self.sheet)?;
         self.saved = true;
         Ok(())

@@ -19,7 +19,6 @@ use crate::Sheet;
 use lazy_static::lazy_static;
 use regex::Regex;
 use rust_decimal::prelude::*;
-use std::thread::sleep_ms;
 
 lazy_static! {
     static ref FUNCTION: Regex = Regex::new(
